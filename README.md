@@ -150,18 +150,6 @@ This tool is intended for **defensive security analysis** of emails you are auth
 
 ---
 
-## 🗺️ Roadmap
-
-- [ ] SQLite history — store and search past analyses
-- [ ] VT result caching — avoid re-querying the same IOC
-- [ ] AbuseIPDB integration
-- [ ] URLScan.io integration
-- [ ] MalwareBazaar hash lookup
-- [ ] IOC allowlist / false-positive suppression
-- [ ] MISP export
-
----
-
 ## 📄 License
 
 MIT License — free to use, modify, and distribute.
