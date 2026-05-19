@@ -28,7 +28,7 @@ A local SOC dashboard for analyzing `.eml` files. Parse emails, extract IOCs, qu
 ### 1. Clone the repo
 
 ```bash
-https://github.com/thantzinwinrepo/a-mai-email-analyzer.git
+git clone https://github.com/thantzinwinrepo/a-mai-email-analyzer.git
 cd a-mai-email-analyzer
 ```
 
