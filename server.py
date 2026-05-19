@@ -278,8 +278,10 @@ def parse_eml(raw_bytes):
 
 def vt_lookup(ioc, ioc_type, api_key):
     """Query VirusTotal API v3"""
-    if not api_key or not REQUESTS_OK:
-        return None
+    if not api_key:
+        return {'no_key': True}
+    if not REQUESTS_OK:
+        return {'error': 'requests not installed'}
     
     endpoints = {
         'ip':     f'https://www.virustotal.com/api/v3/ip_addresses/{ioc}',
@@ -298,7 +300,6 @@ def vt_lookup(ioc, ioc_type, api_key):
             data = resp.json()
             stats = data.get('data', {}).get('attributes', {}).get('last_analysis_stats', {})
             reputation = data.get('data', {}).get('attributes', {}).get('reputation', 0)
-            community_score = data.get('data', {}).get('attributes', {}).get('total_votes', {})
             return {
                 'malicious':   stats.get('malicious', 0),
                 'suspicious':  stats.get('suspicious', 0),
@@ -308,9 +309,13 @@ def vt_lookup(ioc, ioc_type, api_key):
                 'total':       sum(stats.values()),
                 'link':        f'https://www.virustotal.com/gui/{ioc_type}/{ioc}',
             }
+        elif resp.status_code == 401:
+            return {'no_key': True, 'error': 'Invalid API key'}
         elif resp.status_code == 404:
             return {'malicious': 0, 'suspicious': 0, 'harmless': 0, 'undetected': 0,
                     'reputation': 0, 'total': 0, 'not_found': True, 'link': ''}
+        elif resp.status_code == 429:
+            return {'error': 'VT rate limit hit — wait 1 minute'}
     except Exception as e:
         return {'error': str(e)}
     return None

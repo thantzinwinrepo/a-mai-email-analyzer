@@ -787,8 +787,22 @@ function drawDomainAgeBar(){
 // HELPERS
 function tableWrap(headers,rows){return`<table class="ioc-table"><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>`;}
 function emptyState(msg){return`<div class="empty-state"><div class="empty-icon">—</div><p>${msg}</p></div>`;}
-function vtBadge(vt){if(!vt||vt.error)return'<span class="badge badge-gray">—</span>';if(vt.not_found)return'<span class="badge badge-gray">Unknown</span>';const mal=vt.malicious||0,sus=vt.suspicious||0,tot=vt.total||0;if(mal>0)return`<span class="badge badge-red">🔴 ${mal}/${tot}</span>`;if(sus>0)return`<span class="badge badge-yellow">⚡ ${sus}/${tot}</span>`;return`<span class="badge badge-green">✅ 0/${tot}</span>`;}
-function vtBar(vt){if(!vt||vt.not_found||vt.error)return'<span style="color:var(--muted);">—</span>';const mal=vt.malicious||0,sus=vt.suspicious||0,har=vt.harmless||0,tot=vt.total||1;return`<div class="vt-bar"><div class="vt-seg vt-mal" style="width:${mal/tot*100}%"></div><div class="vt-seg vt-sus" style="width:${sus/tot*100}%"></div><div class="vt-seg vt-clean" style="width:${har/tot*100}%"></div></div>`;}
+function vtBadge(vt){
+  if(!vt||vt.error)return'<span class="badge badge-gray">—</span>';
+  if(vt.no_key)return'<span class="badge badge-gray">⚠️ No API Key</span>';
+  if(vt.not_found)return'<span class="badge badge-gray">Unknown</span>';
+  const mal=vt.malicious||0,sus=vt.suspicious||0,tot=vt.total||0;
+  if(tot===0)return'<span class="badge badge-gray">⚠️ No API Key</span>';
+  if(mal>0)return`<span class="badge badge-red">🔴 ${mal}/${tot}</span>`;
+  if(sus>0)return`<span class="badge badge-yellow">⚡ ${sus}/${tot}</span>`;
+  return`<span class="badge badge-green">✅ 0/${tot}</span>`;
+}
+function vtBar(vt){
+  if(!vt||vt.not_found||vt.error||vt.no_key)return'<span style="color:var(--muted);">—</span>';
+  const mal=vt.malicious||0,sus=vt.suspicious||0,har=vt.harmless||0,tot=vt.total||0;
+  if(tot===0)return'<span style="color:var(--muted);">—</span>';
+  return`<div class="vt-bar"><div class="vt-seg vt-mal" style="width:${mal/tot*100}%"></div><div class="vt-seg vt-sus" style="width:${sus/tot*100}%"></div><div class="vt-seg vt-clean" style="width:${har/tot*100}%"></div></div>`;
+}
 function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function escAttr(s){return String(s||'').replace(/'/g,"\\'");}
 function formatBytes(b){return b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(1)+' MB';}
