@@ -16,10 +16,8 @@ A local SOC dashboard for analyzing `.eml` files. Parse emails, extract IOCs, qu
 - **Sender WHOIS** — RDAP lookup (over HTTPS) for the sender domain: creation date, age, registrar
 - **Threat Score** — automatic risk scoring based on auth failures, URL count, attachments
 - **Visualizations** — IOC distribution chart, VT detection bar chart, threat gauge, domain age chart
-- **Paste Support** — paste raw EML text directly into the dashboard (no file needed)
 - **Export** — download full reports as CSV or JSON
 - **Light / Dark mode** — persists across sessions
-- **Auto-opens browser** — just run the script, the page opens automatically
 
 ---
 
