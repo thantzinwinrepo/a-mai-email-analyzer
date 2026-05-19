@@ -28,7 +28,7 @@ A local SOC dashboard for analyzing `.eml` files. Parse emails, extract IOCs, qu
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/a-mai-email-analyzer.git
+https://github.com/thantzinwinrepo/a-mai-email-analyzer.git
 cd a-mai-email-analyzer
 ```
 
@@ -41,7 +41,11 @@ pip install -r requirements.txt
 ### 3. Run
 
 ```bash
+# macOS / Linux
 python3 server.py
+
+# Windows
+python server.py
 ```
 
 The browser opens automatically at `http://localhost:8000`.
